@@ -4,6 +4,9 @@ on:
     - cron: '0 * * * *' # Runs every hour
   workflow_dispatch: # Allows manual trigger
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   update-readme-with-blog:
     name: Update README with Hashnode Posts
@@ -14,7 +17,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Pull in posts
-        uses: gautamkrishnar/blog-post-workflow@v1
+        uses: gautamkrishnar/blog-post-workflow@1.9.6
         with:
-          # Standard Hashnode RSS format
-          feed_list: "https://tiffexplores.hashnode.dev/rss.xml"
+          # Hashnode RSS feed
+          feed_list: "https://tiffexplores.hashnode.dev/feed.rss"
