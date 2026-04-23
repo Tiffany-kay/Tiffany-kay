@@ -1,18 +1,20 @@
-name: Latest blog post workflow
+nname: Latest blog post workflow
 on:
-  schedule: # Run workflow automatically
+  schedule:
     - cron: '0 * * * *' # Runs every hour
-  workflow_dispatch: # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch: # Allows manual trigger
 
 jobs:
   update-readme-with-blog:
-    name: Update this repo's README with latest blog posts
+    name: Update README with Hashnode Posts
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # Crucial: Allows the bot to edit your README
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Pull in posts
         uses: gautamkrishnar/blog-post-workflow@v1
         with:
-          # Points specifically to your "TiffExplores" logic dumps
-          feed_list: "https://hashnode.com/@TiffExplores/rss.xml"
+          # Standard Hashnode RSS format
+          feed_list: "https://tiffexplores.hashnode.dev/rss.xml"
