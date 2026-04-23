@@ -17,4 +17,4 @@ jobs:
         uses: gautamkrishnar/blog-post-workflow@v1
         with:
           # Standard Hashnode RSS format
-          feed_list: "https://hashnode.com/@TiffExplores/rss.xml"
+          feed_list: "https://tiff-explores.hashnode.dev/rss.xml"
