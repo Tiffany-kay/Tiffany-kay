@@ -1,35 +1,50 @@
 name: Latest blog post workflow
 on:
   schedule:
-    - cron: '0 * * * *'
-  workflow_dispatch:
+    - cron: '0 * * * *' # Auto-sync every hour
+  workflow_dispatch: # Manual override
 
 jobs:
   update-readme-with-blog:
     name: Update README with Hashnode Posts
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: write # Allows the action to push README changes
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Debug RSS (see actual HTTP status)
+      - name: Diagnose RSS endpoint (print HTTP headers/status)
+        # Prints response headers for both plain and browser UA requests so we
+        # can see exactly what status code Hashnode returns to the runner.
         run: |
-          set -x
-          curl -I "https://tiff-explores.hashnode.dev/rss.xml" || true
-          curl -I -H "User-Agent: Mozilla/5.0" "https://tiff-explores.hashnode.dev/rss.xml" || true
+          echo "=== Default UA ==="
+          curl -sI "https://tiff-explores.hashnode.dev/rss.xml" || true
+          echo "=== Browser UA ==="
+          curl -sI \
+            -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36" \
+            "https://tiff-explores.hashnode.dev/rss.xml" || true
 
       - name: Download RSS with browser User-Agent
+        # Hashnode returns 403 to the default curl/Node user-agent used by
+        # blog-post-workflow, but allows browser-like requests.  We fetch the
+        # feed ourselves with a browser UA and save it as a local file so the
+        # action never has to contact Hashnode directly.
+        # -sSL (no -f): follow redirects silently WITHOUT failing on HTTP errors
+        # so the step does not exit(22) when Hashnode returns 4xx.
         run: |
-          curl -fsSL \
+          curl -sSL \
             -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36" \
             -H "Accept: application/rss+xml,application/xml;q=0.9,*/*;q=0.8" \
             "https://tiff-explores.hashnode.dev/rss.xml" \
-            -o rss.xml
+            -o rss.xml || true
+          echo "--- rss.xml first 5 lines ---"
+          head -5 rss.xml || echo "(file empty or missing)"
 
       - name: Pull in posts
         uses: gautamkrishnar/blog-post-workflow@v1
         with:
-          feed_list: "file://./rss.xml"
+          # Point at the locally-downloaded file so the action never fetches
+          # from Hashnode directly (avoids the IP/UA-based 403 block).
+          feed_list: "file://${{ github.workspace }}/rss.xml"
           max_post_count: 5

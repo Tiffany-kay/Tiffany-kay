@@ -61,4 +61,5 @@ I document technical specs and post-mortems to help other devs avoid the same ra
 <div align="center">
   <p>Made with ☕ and too many <code>console.log()</code> statements.</p>
   <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Cat%20Face.png" alt="Cat Face" width="25" height="25" />
-  
+</div>
+
