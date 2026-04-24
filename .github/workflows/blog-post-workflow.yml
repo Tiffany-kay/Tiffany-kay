@@ -14,7 +14,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Download RSS (browser-like)
+      - name: Debug RSS (see actual HTTP status)
+        run: |
+          set -x
+          curl -I "https://tiff-explores.hashnode.dev/rss.xml" || true
+          curl -I -H "User-Agent: Mozilla/5.0" "https://tiff-explores.hashnode.dev/rss.xml" || true
+
+      - name: Download RSS with browser User-Agent
         run: |
           curl -fsSL \
             -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36" \
@@ -26,3 +32,4 @@ jobs:
         uses: gautamkrishnar/blog-post-workflow@v1
         with:
           feed_list: "file://./rss.xml"
+          max_post_count: 5
