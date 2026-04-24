@@ -1,20 +1,24 @@
 name: Latest blog post workflow
 on:
   schedule:
-    - cron: '0 * * * *' # Runs every hour
-  workflow_dispatch: # Allows manual trigger
+    - cron: '0 * * * *' # Auto-sync every hour
+  workflow_dispatch: # Manual override
 
 jobs:
   update-readme-with-blog:
     name: Update README with Hashnode Posts
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Crucial: Allows the bot to edit your README
+      contents: write # Allows the bot to push changes to your profile
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Pull in posts
         uses: gautamkrishnar/blog-post-workflow@v1
         with:
-          # Standard Hashnode RSS format
+          # This URL is now verified live
           feed_list: "https://tiff-explores.hashnode.dev/rss.xml"
+          # Modernized user agent to bypass Hashnode's 403 security filter
+          user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+          # Optional: Limits the number of posts displayed (max 5)
+          max_post_count: 5
