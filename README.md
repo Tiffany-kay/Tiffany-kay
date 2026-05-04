@@ -25,8 +25,9 @@
 
 ## ✍️ Latest blog posts
 <!-- BLOG-POST-LIST:START -->
-* [I Spent 48 Hours Connecting Discord to OpenClaw Because I Ignored the Docs 🤡](https://tiff-explores.hashnode.dev/i-spent-48-hours-connecting-discord-to-openclaw-because-i-ignored-the-docs) - 2026-03-20
-* [How I Optimized M-Pesa Integrations Using Netlify Functions (And Survived to Tell the Tale)](https://tiff-explores.hashnode.dev/how-i-optimized-m-pesa-integrations-using-netlify-functions-and-survived-to-tell-the-tale) - 2026-02-14
+* [Shadow Networking & Repo Hygiene: How I Stopped Fighting Security Controls](https://tiff-explores.hashnode.dev/shadow-networking-repo-hygiene-how-i-stopped-fighting-security-controls) - 2026-04-30
+* [Permission Hell: Why EACCES Felt Like the Container Was Gaslighting Me](https://tiff-explores.hashnode.dev/permission-hell-why-eacces-felt-like-the-container-was-gaslighting-me) - 2026-04-28
+* [Infrastructure as a Prison: Why My "Open" Ports Were Gaslighting Me](https://tiff-explores.hashnode.dev/infrastructure-as-a-prison-why-my-open-ports-were-gaslighting-me) - 2026-04-27
 <!-- BLOG-POST-LIST:END -->
 
 > Read more on Hashnode → https://tiff-explores.hashnode.dev/
